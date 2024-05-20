@@ -1,0 +1,14 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ include "khulnasoft-agent.fullname" . }}
+  labels:
+    {{- include "khulnasoft-agent.labels" . | nindent 4 }}
+roleRef:
+  kind: ClusterRole
+  name: {{ include "khulnasoft-agent.fullname" . }}
+  apiGroup: rbac.authorization.k8s.io
+subjects:
+  - kind: ServiceAccount
+    name: {{ include "khulnasoft-agent.serviceAccountName" . }}
+    namespace: {{ .Release.Namespace }}

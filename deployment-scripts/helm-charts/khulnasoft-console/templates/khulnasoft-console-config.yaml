@@ -1,0 +1,27 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "{{ include "khulnasoft-console.fullname" . }}-config"
+  labels:
+    {{- include "khulnasoft-console.labels" . | nindent 4 }}
+    name: "{{ include "khulnasoft-console.fullname" . }}-config"
+data:
+  KHULNASOFT_DEBUG: "false"
+  KHULNASOFT_SAAS_DEPLOYMENT: "false"
+  KHULNASOFT_TELEMETRY_ENABLED: "false"
+  {{- if .Values.fileserver.create }}
+  KHULNASOFT_FILE_SERVER_HOST: {{ include "khulnasoft-console.fullname" . }}-file-server.{{ .Release.Namespace }}.svc.{{ .Values.global.cluster_domain }}
+  KHULNASOFT_FILE_SERVER_PORT: "9000"
+  KHULNASOFT_FILE_SERVER_EXTERNAL: "false"
+  {{- else }}
+  KHULNASOFT_FILE_SERVER_HOST: {{ .Values.fileserver.fileServerHost }}
+  KHULNASOFT_FILE_SERVER_PORT: {{ .Values.fileserver.fileServerPort }}
+  KHULNASOFT_FILE_SERVER_EXTERNAL: "true"
+  {{- end }}
+
+  {{- if .Values.proxy.enabled }}
+  http_proxy: {{ .Values.proxy.http_proxy }}
+  https_proxy: {{ .Values.proxy.https_proxy }}
+  no_proxy: "127.0.0.1, localhost, {{ include "khulnasoft-console.fullname" . }}-file-server.{{ .Release.Namespace  }}.svc.{{ .Values.global.cluster_domain }}, {{ include "khulnasoft-console.fullname" . }}-postgres.{{ .Release.Namespace  }}.svc.{{ .Values.global.cluster_domain }}, {{ include "khulnasoft-console.fullname" . }}-redis.{{ .Release.Namespace  }}.svc.{{ .Values.global.cluster_domain }}, {{ include "khulnasoft-console.fullname" . }}-neo4j.{{ .Release.Namespace  }}.svc.{{ .Values.global.cluster_domain }}, {{ include "khulnasoft-console.fullname" . }}-kafka-broker.{{ .Release.Namespace  }}.svc.{{ .Values.global.cluster_domain }}, {{ include "khulnasoft-console.fullname" . }}-ui.{{ .Release.Namespace  }}.svc.{{ .Values.global.cluster_domain }}, {{ include "khulnasoft-console.fullname" . }}-server.{{ .Release.Namespace  }}.svc.{{ .Values.global.cluster_domain }}, {{ include "khulnasoft-console.fullname" . }}-router.{{ .Release.Namespace  }}.svc.{{ .Values.global.cluster_domain }}, *.{{ .Release.Namespace  }}.svc.{{ .Values.global.cluster_domain }}, *.{{ .Values.global.cluster_domain }}, {{ .Values.proxy.additional_no_proxy }}"
+  {{- end }}

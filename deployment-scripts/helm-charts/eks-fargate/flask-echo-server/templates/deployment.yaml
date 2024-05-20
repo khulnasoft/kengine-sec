@@ -1,0 +1,82 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-echo-server
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: flask-echo-server
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: flask-echo-server
+  template:
+    metadata:
+      labels:
+        app: flask-echo-server
+    spec:
+      volumes:
+        - name: khulnasoft-volume
+          emptyDir: {}
+
+      initContainers:
+      - name: khulnasoft-agent
+        image: "{{ .Values.khulnasoftAgentImage.name }}:{{ .Values.khulnasoftAgentImage.tag }}"
+        command: ["/khulnasoft/bin/bash", "-c"]
+        args: ["/khulnasoft/bin/cp -r /khulnasoft/* /khulnasoft-mount"]
+        imagePullPolicy: Always
+        volumeMounts:
+        - name: khulnasoft-volume
+          mountPath: /khulnasoft-mount
+
+      containers:
+        - name: flask
+          image: khulnasoft/flask-echo-server:latest
+          ports:
+          - containerPort: 5000
+          command: ["/khulnasoft/usr/local/bin/khulnasoft-entry-point-scratch.sh"]
+          args: ["/app/entrypoint.sh"]
+          volumeMounts:
+          - name: khulnasoft-volume
+            mountPath: /khulnasoft
+          env:
+          - name: KHULNASOFT_KEY
+            valueFrom:
+              secretKeyRef:
+                name: "khulnasoft-key"
+                key: "khulnasoft-key"
+          - name: USER_DEFINED_TAGS
+            value: {{ .Values.userDefinedTags }}
+          - name: DF_ENABLE_PROCESS_REPORT
+            value: "{{ .Values.enableGraphReport }}"
+          - name: DF_ENABLE_CONNECTIONS_REPORT
+            value: "{{ .Values.enableGraphReport }}"
+          - name: MGMT_CONSOLE_URL
+            value: "{{ required "managementConsoleUrl is required" .Values.managementConsoleUrl }}"
+          - name: MGMT_CONSOLE_PORT
+            value: "{{ required "managementConsolePort is required" .Values.managementConsolePort }}"
+          - name: DF_INSTALL_DIR
+            value: "/khulnasoft"
+          - name: DF_SERVERLESS
+            value: "true"
+          - name: INSTANCE_ID_SUFFIX
+            value: "{{ .Values.instanceIdSuffix }}"
+          - name: SCOPE_HOSTNAME
+            valueFrom:
+              fieldRef:
+                fieldPath: spec.nodeName
+          - name: AGENT_POD_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: AGENT_POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+          resources:
+            requests:
+              cpu: {{ .Values.resources.requests.cpu }}
+              memory: {{ .Values.resources.requests.memory }}
+            limits:
+              cpu: {{ .Values.resources.limits.cpu }}
+              memory: {{ .Values.resources.limits.memory }}

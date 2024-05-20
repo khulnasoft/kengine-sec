@@ -1,0 +1,420 @@
+version: "3.7"
+
+x-service-variables: &common-creds
+    # uncomment to set the credentials otherwise default credentials will be used
+    # KHULNASOFT_NEO4J_USER: neo4juser
+    # KHULNASOFT_NEO4J_PASSWORD: changeme
+    # NEO4J_AUTH: neo4juser/changeme
+    # KHULNASOFT_POSTGRES_USER_DB_USER: postgresuser
+    # KHULNASOFT_POSTGRES_USER_DB_PASSWORD: changeme
+    KHULNASOFT_NEO4J_BOLT_PORT: 7687
+    KHULNASOFT_NEO4J_HOST: khulnasoft-neo4j
+    KHULNASOFT_POSTGRES_USER_DB_HOST: khulnasoft-postgres
+    KHULNASOFT_POSTGRES_USER_DB_NAME: users
+    KHULNASOFT_POSTGRES_USER_DB_PORT: 5432
+    KHULNASOFT_POSTGRES_USER_DB_SSLMODE: disable
+    KHULNASOFT_KAFKA_BROKERS: khulnasoft-kafka-broker:9092
+    # public bucket with read permissions on objects for hosting vulnerability database
+    # S3 bucket permissions {"Version":"2012-10-17","Statement":[{"Sid":"database","Effect":"Allow","Principal":"*","Action":"s3:GetObject","Resource":["arn:aws:s3:::<bucket-name>/database/*","arn:aws:s3:::<bucket-name>/database"]}]}
+    KHULNASOFT_FILE_SERVER_DB_BUCKET: database
+    # private bucket to host reports, sbom, etc.
+    KHULNASOFT_FILE_SERVER_BUCKET: default
+    # If using S3 or other external file server (MinIO/SeaweedFS), set this to true
+    KHULNASOFT_FILE_SERVER_EXTERNAL: "false"
+    # set s3.amazonaws.com if using s3 buckets
+    KHULNASOFT_FILE_SERVER_HOST: khulnasoft-file-server
+    KHULNASOFT_FILE_SERVER_PORT: 9000
+    # uncomment to set access key if using s3 buckets
+    # KHULNASOFT_FILE_SERVER_USER: fileserveruser
+    # uncomment to set secret key if using s3 buckets
+    # KHULNASOFT_FILE_SERVER_PASSWORD: changeme
+    # set true if https
+    KHULNASOFT_FILE_SERVER_SECURE: "false"
+    # set aws s3 bucket region if using s3 buckets
+    KHULNASOFT_FILE_SERVER_REGION: ""
+    KHULNASOFT_REDIS_DB_NUMBER: 0
+    KHULNASOFT_REDIS_HOST: khulnasoft-redis
+    KHULNASOFT_REDIS_PORT: 6379
+    KHULNASOFT_SAAS_DEPLOYMENT: "false"
+    KHULNASOFT_DEBUG: "false"
+    DF_ENABLE_DEBUG: ""
+    KHULNASOFT_ENABLE_PPROF: ""
+    KHULNASOFT_TASKS_CONCURRENCY: 50
+    KHULNASOFT_TASKS_MAX_RETRIES: 3
+    KHULNASOFT_MAX_SCAN_WORKLOAD: 5
+
+x-telemetry-variables: &telemetry-variables
+    KHULNASOFT_TELEMETRY_ENABLED: "false"
+
+x-proxy-variables: &proxy-variables
+    # use below variables to set http/s proxy env
+    http_proxy: ""
+    https_proxy: ""
+    # no need to proxy internal services
+    no_proxy: "127.0.0.1,localhost,khulnasoft-file-server,khulnasoft-postgres,khulnasoft-redis,khulnasoft-neo4j,khulnasoft-kafka-broker,khulnasoft-ui,khulnasoft-server,khulnasoft-router"
+
+services:
+
+  khulnasoft-postgres:
+    container_name: khulnasoft-postgres
+    image: ${IMAGE_REPOSITORY:-quay.io/khulnasoft}/khulnasoft_postgres_ce:${DF_IMG_TAG:-2.2.1}
+    ulimits:
+      core: 0
+    restart: unless-stopped
+    networks:
+      - khulnasoft_net
+    volumes:
+      - khulnasoft_data:/data:rw
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+
+  khulnasoft-redis:
+    container_name: khulnasoft-redis
+    image: ${IMAGE_REPOSITORY:-quay.io/khulnasoft}/khulnasoft_redis_ce:${DF_IMG_TAG:-2.2.1}
+    ulimits:
+      core: 0
+    restart: unless-stopped
+    networks:
+      - khulnasoft_net
+    volumes:
+      - khulnasoft_redis_data:/data:rw
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+
+  khulnasoft-neo4j:
+    container_name: khulnasoft-neo4j
+    image: ${IMAGE_REPOSITORY:-quay.io/khulnasoft}/khulnasoft_neo4j_ce:${DF_IMG_TAG:-2.2.1}
+
+    ulimits:
+      core: 0
+    restart: unless-stopped
+    tmpfs:
+      - /tmp
+    networks:
+      - khulnasoft_net
+    environment:
+      <<: *common-creds
+      NEO4J_server_memory_pagecache_size: 2600m
+      NEO4J_db_tx__log_rotation_retention__policy: "3 files"
+      NEO4J_PLUGINS: '["apoc"]'
+      DF_REMOTE_BACKUP_ROOT: ""
+      AWS_ACCESS_KEY: ""
+      AWS_SECRET_KEY: ""
+    ports:
+      - "127.0.0.1:7474:7474"
+      - "127.0.0.1:7687:7687"
+    volumes:
+      - khulnasoft_neo4j_data:/data:rw
+      - khulnasoft_neo4j_logs:/logs:rw
+      - khulnasoft_neo4j_backups:/backups:rw
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+
+  khulnasoft-console-agent:
+    container_name: khulnasoft-console-agent
+    image: ${IMAGE_REPOSITORY:-quay.io/khulnasoft}/khulnasoft_agent_ce:${DF_IMG_TAG:-2.2.1}
+    ulimits:
+      core: 0
+    deploy:
+      resources:
+        limits:
+          cpus: ".2"
+    restart: unless-stopped
+    environment:
+      - MGMT_CONSOLE_URL_INTERNAL=127.0.0.1
+      - MGMT_CONSOLE_PORT_INTERNAL=8081
+      - MGMT_CONSOLE_URL=127.0.0.1
+      - MGMT_CONSOLE_PORT=443
+      - KHULNASOFT_KEY=""
+      - KHULNASOFT_CONSOLE_AGENT=true
+    network_mode: "host"
+    pid: "host"
+    volumes:
+      - /sys/kernel/debug:/sys/kernel/debug:rw
+      - /var/log/fenced
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/lib/docker/:/fenced/mnt/host/var/lib/docker/:rw
+      - /:/fenced/mnt/host/:ro
+    privileged: true
+    depends_on:
+      - khulnasoft-server
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200m"
+
+  khulnasoft-router:
+    container_name: khulnasoft-router
+    image: ${IMAGE_REPOSITORY:-quay.io/khulnasoft}/khulnasoft_router_ce:${DF_IMG_TAG:-2.2.1}
+    ulimits:
+      core: 0
+    networks:
+      - khulnasoft_net
+    restart: unless-stopped
+    environment:
+      FORCE_HTTPS_REDIRECT: "true"
+      KAFKA_REST_PROXY: "khulnasoft-rest-proxy:8082"
+    ports:
+      - "80:80"
+      - "${MGMT_CONSOLE_PORT:-443}:443"
+    volumes:
+      - /etc/khulnasoft/certs:/etc/khulnasoft/certs/:ro
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+
+  # this service can be commented in case S3 or external file server is used
+  khulnasoft-file-server:
+    container_name: khulnasoft-file-server
+    image: ${IMAGE_REPOSITORY:-quay.io/khulnasoft}/khulnasoft_file_server_ce:${DF_IMG_TAG:-2.2.1}
+    ulimits:
+      core: 0
+    networks:
+      - khulnasoft_net
+    restart: unless-stopped
+    environment:
+      <<: *common-creds
+    #   - FILE_SERVER_ROOT_USER=khulnasoft
+    #   - FILE_SERVER_ROOT_PASSWORD=khulnasoft
+    ports:
+      - "127.0.0.1:9000:9000"
+      - "127.0.0.1:9333:9333"
+    volumes:
+      - khulnasoft_file_server:/data:rw
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+
+  khulnasoft-server:
+    container_name: khulnasoft-server
+    image: ${IMAGE_REPOSITORY:-quay.io/khulnasoft}/khulnasoft_server_ce:${DF_IMG_TAG:-2.2.1}
+    ulimits:
+      core: 0
+    tmpfs:
+      - /tmp
+    environment:
+      <<: [*common-creds, *telemetry-variables, *proxy-variables]
+      ELASTICSEARCH_SCHEME: "http"
+      KHULNASOFT_ACCESS_TOKEN_EXPIRY_MINUTES: 5
+      KHULNASOFT_CONSOLE_ORCHESTRATOR: "docker"
+    networks:
+      - khulnasoft_net
+    depends_on:
+      - khulnasoft-redis
+      - khulnasoft-postgres
+      - khulnasoft-neo4j
+    ports:
+      - "0.0.0.0:8080:8080"
+      - "127.0.0.1:8081:8081"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /etc/docker/certs.d:/etc/docker/certs.d:ro
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200m"
+    restart: unless-stopped
+
+  khulnasoft-worker:
+    container_name: khulnasoft-worker
+    image: ${IMAGE_REPOSITORY:-quay.io/khulnasoft}/khulnasoft_worker_ce:${DF_IMG_TAG:-2.2.1}
+    ulimits:
+      core: 0
+    restart: unless-stopped
+    networks:
+      - khulnasoft_net
+    depends_on:
+      - khulnasoft-redis
+      - khulnasoft-postgres
+      - khulnasoft-file-server
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200m"
+    environment:
+      <<: [*common-creds, *telemetry-variables, *proxy-variables]
+    volumes:
+      - /etc/docker/certs.d:/etc/docker/certs.d:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  # khulnasoft-worker-2:
+  #   container_name: khulnasoft-worker-2
+  #   image: ${IMAGE_REPOSITORY:-quay.io/khulnasoft}/khulnasoft_worker_ce:${DF_IMG_TAG:-2.2.1}
+  #   ulimits:
+  #     core: 0
+  #   restart: unless-stopped
+  #   networks:
+  #     - khulnasoft_net
+  #   depends_on:
+  #     - khulnasoft-redis
+  #     - khulnasoft-postgres
+  #   logging:
+  #     driver: "json-file"
+  #     options:
+  #       max-size: "1g"
+  #   environment:
+  #     <<: *common-creds
+  #   volumes:
+  #     - /etc/docker/certs.d:/etc/docker/certs.d:ro
+  #     - /var/run/docker.sock:/var/run/docker.sock
+
+  # khulnasoft-worker-3:
+  #   container_name: khulnasoft-worker-3
+  #   image: ${IMAGE_REPOSITORY:-quay.io/khulnasoft}/khulnasoft_worker_ce:${DF_IMG_TAG:-2.2.1}
+  #   ulimits:
+  #     core: 0
+  #   restart: unless-stopped
+  #   networks:
+  #     - khulnasoft_net
+  #   depends_on:
+  #     - khulnasoft-redis
+  #     - khulnasoft-postgres
+  #   logging:
+  #     driver: "json-file"
+  #     options:
+  #       max-size: "1g"
+  #   environment:
+  #     <<: *common-creds
+  #   volumes:
+  #     - /etc/docker/certs.d:/etc/docker/certs.d:ro
+  #     - /var/run/docker.sock:/var/run/docker.sock
+
+  khulnasoft-scheduler:
+    container_name: khulnasoft-scheduler
+    image: ${IMAGE_REPOSITORY:-quay.io/khulnasoft}/khulnasoft_worker_ce:${DF_IMG_TAG:-2.2.1}
+    ulimits:
+      core: 0
+    restart: unless-stopped
+    environment:
+      <<: [*common-creds, *telemetry-variables, *proxy-variables]
+      KHULNASOFT_MODE: scheduler
+    networks:
+      - khulnasoft_net
+    depends_on:
+      - khulnasoft-redis
+      - khulnasoft-postgres
+      - khulnasoft-worker
+      - khulnasoft-neo4j
+      - khulnasoft-file-server
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+
+  khulnasoft-ui:
+    container_name: khulnasoft-ui
+    image: ${IMAGE_REPOSITORY:-quay.io/khulnasoft}/khulnasoft_ui_ce:${DF_IMG_TAG:-2.2.1}
+    ulimits:
+      core: 0
+    networks:
+      - khulnasoft_net
+    restart: unless-stopped
+    depends_on:
+      - khulnasoft-server
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+
+  khulnasoft-kafka-broker:
+    image: ${IMAGE_REPOSITORY:-quay.io/khulnasoft}/khulnasoft_kafka_broker_ce:${DF_IMG_TAG:-2.2.1}
+    hostname: khulnasoft-kafka-broker
+    container_name: khulnasoft-kafka-broker
+    # environment:
+    #   - KAFKA_LOG_DIRS=/var/lib/kafka/data
+    ports:
+      - "127.0.0.1:9092:9092"
+      - "127.0.0.1:9101:9101"
+    volumes:
+      - khulnasoft_kafka_broker:/var/lib/kafka/data:rw
+    networks:
+      - khulnasoft_net
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+    restart: unless-stopped
+
+  khulnasoft-ingester:
+    image: ${IMAGE_REPOSITORY:-quay.io/khulnasoft}/khulnasoft_worker_ce:${DF_IMG_TAG:-2.2.1}
+    hostname: khulnasoft-ingester
+    container_name: khulnasoft-ingester
+    ports:
+      - "127.0.0.1:8181:8181"
+    environment:
+      <<: [*common-creds, *telemetry-variables, *proxy-variables]
+      KHULNASOFT_MODE: ingester
+    networks:
+      - khulnasoft_net
+    depends_on:
+      - khulnasoft-kafka-broker
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200m"
+    restart: unless-stopped
+
+  khulnasoft-telemetry:
+    image: ${IMAGE_REPOSITORY:-quay.io/khulnasoft}/khulnasoft_telemetry_ce:${DF_IMG_TAG:-2.2.1}
+    hostname: khulnasoft-telemetry
+    container_name: khulnasoft-telemetry
+    ports:
+      - "127.0.0.1:14267:14267"
+      - "127.0.0.1:14268:14268"
+      - "127.0.0.1:9411:9411"
+      - "127.0.0.1:14269:14269"
+      - "127.0.0.1:16686:16686"
+    environment:
+      <<: *telemetry-variables
+    networks:
+      - khulnasoft_net
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+    restart: unless-stopped
+
+  # khulnasoft-asynq-mon:
+  #   image: ${IMAGE_REPOSITORY:-quay.io/khulnasoft}/asynqmon:latest
+  #   hostname: khulnasoft-asynq-mon
+  #   container_name: khulnasoft-asynq-mon
+  #   environment:
+  #     - PORT=8090
+  #     - REDIS_ADDR=khulnasoft-redis:6379
+  #   ports:
+  #     - "8090:8090"
+  #   networks:
+  #     - khulnasoft_net
+  #   logging:
+  #     driver: "json-file"
+  #     options:
+  #       max-size: "100m"
+  #   restart: unless-stopped
+
+volumes:
+  khulnasoft_data:
+    driver: local
+  khulnasoft_redis_data:
+    driver: local
+  khulnasoft_neo4j_data:
+    driver: local
+  khulnasoft_neo4j_logs:
+    driver: local
+  khulnasoft_neo4j_backups:
+    driver: local
+  khulnasoft_kafka_broker:
+    driver: local
+  khulnasoft_file_server:
+    driver: local
+
+networks:
+  khulnasoft_net:
+    driver: bridge

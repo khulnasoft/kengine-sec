@@ -1,0 +1,18 @@
+{{- if .Values.neo4j.create }}
+---
+apiVersion: v1
+kind: Secret
+type: Opaque
+metadata:
+  name: {{ include "khulnasoft-console.fullname" . }}-secrets-neo4j
+  labels:
+    {{- include "khulnasoft-console.labels" . | nindent 4 }}
+    component: neo4j
+stringData:
+  KHULNASOFT_NEO4J_BOLT_PORT: "7687"
+  KHULNASOFT_NEO4J_HOST: {{ include "khulnasoft-console.fullname" . }}-neo4j.{{ .Release.Namespace }}.svc.{{ .Values.global.cluster_domain }}
+  {{- if .Values.neo4j.secrets }}
+  KHULNASOFT_NEO4J_USER: {{ (splitList "/" .Values.neo4j.secrets.NEO4J_AUTH) | first | quote }} 
+  KHULNASOFT_NEO4J_PASSWORD: {{ (splitList "/" .Values.neo4j.secrets.NEO4J_AUTH) | last | quote }} 
+  {{- end }}
+{{- end }}

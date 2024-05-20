@@ -1,0 +1,20 @@
+{{- if .Values.postgres.create }}
+---
+apiVersion: v1
+kind: Secret
+type: Opaque
+metadata:
+  name: {{ include "khulnasoft-console.fullname" . }}-secrets-postgres
+  labels:
+    {{- include "khulnasoft-console.labels" . | nindent 4 }}
+    name: {{ include "khulnasoft-console.fullname" . }}-secrets-postgres
+stringData:
+  KHULNASOFT_POSTGRES_USER_DB_PORT: "5432"
+  KHULNASOFT_POSTGRES_USER_DB_HOST: {{ include "khulnasoft-console.fullname" . }}-postgres.{{ .Release.Namespace }}.svc.{{ .Values.global.cluster_domain }}
+  KHULNASOFT_POSTGRES_USER_DB_SSLMODE: disable
+  {{- if .Values.fileserver.secrets }}
+  KHULNASOFT_POSTGRES_USER_DB_USER: {{ .Values.postgres.secrets.POSTGRES_USER | quote }}
+  KHULNASOFT_POSTGRES_USER_DB_PASSWORD: {{ .Values.postgres.secrets.POSTGRES_PASSWORD | quote }}
+  {{- end }}
+  KHULNASOFT_POSTGRES_USER_DB_NAME: {{ .Values.postgres.config.POSTGRES_DB | quote }}
+{{- end }}

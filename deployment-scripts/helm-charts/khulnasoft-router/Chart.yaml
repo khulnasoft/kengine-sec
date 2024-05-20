@@ -1,0 +1,6 @@
+apiVersion: v2
+appVersion: 2.2.1
+description: Khulnasoft Router - Helm chart for Kubernetes
+name: khulnasoft-router
+type: application
+version: 2.2.1

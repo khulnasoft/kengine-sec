@@ -1,0 +1,19 @@
+{{- if and (eq .Values.fileserver.create false) .Values.aws_s3_buckets.create }}
+---
+apiVersion: v1
+kind: Secret
+type: Opaque
+metadata:
+  name: {{ include "khulnasoft-console.fullname" . }}-secrets-fileserver
+  labels:
+    {{- include "khulnasoft-console.labels" . | nindent 4 }}
+    component: file-server
+stringData:
+  KHULNASOFT_FILE_SERVER_HOST: "s3.amazonaws.com"
+  KHULNASOFT_FILE_SERVER_SECURE: "true"
+  KHULNASOFT_FILE_SERVER_DB_BUCKET: {{ .Values.aws_s3_buckets.vulnerability_db_bucket | quote }}
+  KHULNASOFT_FILE_SERVER_BUCKET: {{ .Values.aws_s3_buckets.data_bucket | quote }}
+  KHULNASOFT_FILE_SERVER_PASSWORD: {{ .Values.aws_s3_buckets.secret_access_key | quote }}
+  KHULNASOFT_FILE_SERVER_USER: {{ .Values.aws_s3_buckets.access_key_id | quote }}
+  KHULNASOFT_FILE_SERVER_REGION: {{.Values.aws_s3_buckets.region | quote }}
+{{- end }}
