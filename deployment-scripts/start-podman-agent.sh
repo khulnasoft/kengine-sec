@@ -73,7 +73,7 @@ check_options() {
     usage
     exit 0
   fi
-  if [ "$DF_HOSTNAME" == "" ]; then
+  if [ "$KE_HOSTNAME" == "" ]; then
     DF_HOSTNAME=$(hostname)
   fi
 }
@@ -107,10 +107,10 @@ start_agent() {
     -e USER_DEFINED_TAGS="$USER_DEFINED_TAGS" \
     -e MGMT_CONSOLE_URL="$MGMT_CONSOLE_URL" \
     -e MGMT_CONSOLE_PORT="$MGMT_CONSOLE_PORT" \
-    -e SCOPE_HOSTNAME="$DF_HOSTNAME" \
+    -e SCOPE_HOSTNAME="$KE_HOSTNAME" \
     -e KHULNASOFT_KEY="$KHULNASOFT_KEY" \
-    -e DF_USE_DUMMY_SCOPE="$DF_USE_DUMMY_SCOPE" \
-    -e DF_USE_FAT_DUMMY_SCOPE="$DF_USE_FAT_DUMMY_SCOPE" \
+    -e DF_USE_DUMMY_SCOPE="$KE_USE_DUMMY_SCOPE" \
+    -e DF_USE_FAT_DUMMY_SCOPE="$KE_USE_FAT_DUMMY_SCOPE" \
     "$IMAGE_REPOSITORY"/khulnasoft_agent_ce:"${DF_IMG_TAG:-2.2.1}"
 }
 
