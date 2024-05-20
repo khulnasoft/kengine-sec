@@ -1,0 +1,37 @@
+FROM golang:1.19-bullseye AS build
+RUN apt-get update \
+    && apt-get install -y bash make git gcc \
+    && cd /go \
+    && git clone --depth 1 -b v0.44.1 https://github.com/khulnasoft/syft \
+    && cd /go/syft \
+    && go build -v -o syftCli .
+
+FROM scratch
+
+MAINTAINER Khulnasoft Inc
+LABEL khulnasoft.role=system
+
+WORKDIR /
+
+COPY tools/apache/scope/docker/discovery khulnasoft/usr/local/discovery/khulnasoft-discovery
+COPY agent-binary/bin/ khulnasoft/bin/
+COPY etc/certs/* khulnasoft/etc/filebeat/
+COPY plugins/bin/ khulnasoft/bin/
+COPY --from=build /go/syft/syftCli /khulnasoft/usr/local/bin/syft
+
+COPY run_discovery.sh /khulnasoft/home/khulnasoft/
+COPY agent-binary/run_discovery_loop.sh /khulnasoft/home/khulnasoft/
+
+COPY tools/apache/scope/docker/uploadFile.sh khulnasoft/home/khulnasoft/uploadFile.sh
+
+ADD agent-binary/misc/scanners-1.3.0.tar.gz /khulnasoft/home/khulnasoft/
+
+COPY misc/khulnasoft/df-utils/get_cloud_instance_id/getCloudInstanceId /khulnasoft/usr/local/bin/getCloudInstanceId
+COPY tools/apache/scope/docker/khulnasoftutil /khulnasoft/usr/bin/khulnasoftutil
+
+COPY agent-binary/khulnasoft-entry-point-scratch.sh khulnasoft/usr/local/bin/khulnasoft-entry-point-scratch.sh
+COPY agent-binary/start-df-services.sh khulnasoft/usr/local/bin/start-df-services.sh
+
+ENTRYPOINT ["/khulnasoft/bin/ls"]
+
+VOLUME ["/khulnasoft"]
