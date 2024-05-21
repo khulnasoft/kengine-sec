@@ -33,7 +33,7 @@ helm show values khulnasoft/khulnasoft-agent > khulnasoft_agent_values.yaml
 imagePullSecret:
   # Specifies whether a image pull secret should be created
   create: true
-  registry: "quay.io"
+  registry: "docker.io"
   # registry: "https://index.docker.io/v1/"
   username: ""
   password: ""

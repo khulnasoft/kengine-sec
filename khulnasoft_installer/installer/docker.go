@@ -52,7 +52,7 @@ func (di *DockerInstaller) Install() error {
 	}
 	cmd := exec.Command("./start-agent.sh", fmt.Sprintf("-r %s", di.consoleip), fmt.Sprintf(`-k "%s"`, di.apikey))
 	cmd.Env = []string{
-		fmt.Sprintf("DF_IMG_TAG=%v", di.current.ImageTag),
+		fmt.Sprintf("KE_IMG_TAG=%v", di.current.ImageTag),
 	}
 	return cmd.Run()
 }

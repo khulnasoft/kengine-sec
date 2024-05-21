@@ -10,7 +10,7 @@ sample json
     "name": "example_quay",
     "non_secret": {
       "quay_namespace": "namespace",
-      "quay_registry_url": "https://quay.io"
+      "quay_registry_url": "https://docker.io"
     },
     "secret": {
       "quay_access_token": "access_token"
@@ -55,7 +55,7 @@ export const QuayConnectorForm = ({ errorMessage, fieldErrors }: RegistryFormPro
             className="w-3/4 min-[200px] max-w-xs"
             label="Registry URL"
             type={'text'}
-            info="e.g. https://quay.io"
+            info="e.g. https://docker.io"
             name="non_secret.quay_registry_url"
             placeholder="Registry URL"
             color={fieldErrors?.['quay_registry_url'] ? 'error' : 'default'}

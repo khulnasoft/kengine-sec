@@ -58,7 +58,7 @@ const Links = ({ region }: { region: string }) => {
   return (
     <>
       <DFLink
-        href={`https://${region}.console.aws.amazon.com/cloudformation/home?region=${region}#/stacks/create/review?templateURL=https://khulnasoft-public.s3.amazonaws.com/cloud-scanner/khulnasoft-cloud-scanner.template&stackName=Khulnasoft-Cloud-Scanner&param_CloudScannerImage=quay.io/khulnasoftio/cloud-scanner:${version}`}
+        href={`https://${region}.console.aws.amazon.com/cloudformation/home?region=${region}#/stacks/create/review?templateURL=https://khulnasoft-public.s3.amazonaws.com/cloud-scanner/khulnasoft-cloud-scanner.template&stackName=Khulnasoft-Cloud-Scanner&param_CloudScannerImage=docker.io/khulnasoftio/cloud-scanner:${version}`}
         target="_blank"
         rel="noreferrer"
         className="flex items-center mt-4"
@@ -75,7 +75,7 @@ const Links = ({ region }: { region: string }) => {
         You can refer the single account template from here
       </DFLink>
       <DFLink
-        href={`https://${region}.console.aws.amazon.com/cloudformation/home?region=${region}#/stacks/create/review?templateURL=https://khulnasoft-public.s3.amazonaws.com/cloud-scanner/khulnasoft-cloud-scanner-org-common.template&stackName=Khulnasoft-Cloud-Scanner&param_CloudScannerImage=quay.io/khulnasoftio/cloud-scanner:${version}`}
+        href={`https://${region}.console.aws.amazon.com/cloudformation/home?region=${region}#/stacks/create/review?templateURL=https://khulnasoft-public.s3.amazonaws.com/cloud-scanner/khulnasoft-cloud-scanner-org-common.template&stackName=Khulnasoft-Cloud-Scanner&param_CloudScannerImage=docker.io/khulnasoftio/cloud-scanner:${version}`}
         target="_blank"
         rel="noreferrer"
         className="flex items-center mt-4"

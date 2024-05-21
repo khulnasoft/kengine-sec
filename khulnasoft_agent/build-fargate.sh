@@ -9,4 +9,4 @@ wget https://khulnasoft-public.s3.amazonaws.com/Kengine/agent-sensor/v2.1.0/cc11
 tar -zxvf khulnasoft-agent-2.tar.gz -C $AGENT_BINARY_BUILD/
 rm -rf khulnasoft-agent-2.tar.gz
 
-docker build --build-arg AGENT_BINARY_BUILD_RELATIVE="$AGENT_BINARY_BUILD_RELATIVE" --network host --rm=true --tag=$IMAGE_REPOSITORY/khulnasoft_agent_ce:fargate-${DF_IMG_TAG:-latest} -f agent-binary/Dockerfile.fargate ..
+docker build --build-arg AGENT_BINARY_BUILD_RELATIVE="$AGENT_BINARY_BUILD_RELATIVE" --network host --rm=true --tag=$IMAGE_REPOSITORY/khulnasoft_agent_ce:fargate-${KE_IMG_TAG:-latest} -f agent-binary/Dockerfile.fargate ..

@@ -26,7 +26,7 @@ USER_DEFINED_TAGS=""
 KHULNASOFT_KEY=""
 DF_HOSTNAME=""
 INSTANCE_ID_SUFFIX="N"
-IMAGE_REPOSITORY=${IMAGE_REPOSITORY:-quay.io/khulnasoft}
+IMAGE_REPOSITORY=${IMAGE_REPOSITORY:-docker.io/khulnasoft}
 
 check_options() {
   if [ "$#" -lt 1 ]; then
@@ -113,7 +113,7 @@ start_agent() {
     -e KHULNASOFT_KEY="$KHULNASOFT_KEY" \
     -e DF_USE_DUMMY_SCOPE="$KE_USE_DUMMY_SCOPE" \
     -e DF_USE_FAT_DUMMY_SCOPE="$KE_USE_FAT_DUMMY_SCOPE" \
-    "$IMAGE_REPOSITORY"/khulnasoft_agent_ce:"${DF_IMG_TAG:-2.2.1}"
+    "$IMAGE_REPOSITORY"/khulnasoft_agent_ce:"${KE_IMG_TAG:-2.2.1}"
 }
 
 main() {

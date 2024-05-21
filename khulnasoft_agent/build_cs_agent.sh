@@ -1,7 +1,7 @@
 #!/bin/bash
 
 IMAGE_REPOSITORY=${IMAGE_REPOSITORY:-khulnasoft}
-DF_IMG_TAG=${DF_IMG_TAG:-latest}
+KE_IMG_TAG=${KE_IMG_TAG:-latest}
 STEAMPIPE_IMG_TAG=${STEAMPIPE_IMG_TAG:-latest}
 VERSION=${VERSION:-v2.2.0}
 

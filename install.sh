@@ -54,9 +54,9 @@ done
 # Set image tag
 if [[ -n $IMAGE_TAG ]]; then
     echo -e "${CHECKMARK} Using image tag: $IMAGE_TAG"
-elif [[ -n $DF_IMG_TAG ]]; then
-    IMAGE_TAG=$DF_IMG_TAG
-    echo -e "${CHECKMARK} Using image tag from DF_IMG_TAG environment variable: $IMAGE_TAG"
+elif [[ -n $KE_IMG_TAG ]]; then
+    IMAGE_TAG=$KE_IMG_TAG
+    echo -e "${CHECKMARK} Using image tag from KE_IMG_TAG environment variable: $IMAGE_TAG"
 else
     IMAGE_TAG=$DEFAULT_IMAGE_TAG
     echo -e "${CHECKMARK} Using default image tag: $IMAGE_TAG"

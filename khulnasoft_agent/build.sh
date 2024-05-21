@@ -1,7 +1,7 @@
 #!/bin/bash
 
 IMAGE_REPOSITORY=${IMAGE_REPOSITORY:-khulnasoft}
-DF_IMG_TAG=${DF_IMG_TAG:-latest}
+KE_IMG_TAG=${KE_IMG_TAG:-latest}
 
 building_image(){
 
@@ -42,7 +42,7 @@ building_image(){
     fi
 
     echo "Building Agent Image"
-    docker build --network host --rm=true --build-arg DF_IMG_TAG="${DF_IMG_TAG}" --build-arg IMAGE_REPOSITORY="${IMAGE_REPOSITORY}" --tag=$IMAGE_REPOSITORY/khulnasoft_agent_ce:$KE_IMG_TAG -f Dockerfile .
+    docker build --network host --rm=true --build-arg KE_IMG_TAG="${KE_IMG_TAG}" --build-arg IMAGE_REPOSITORY="${IMAGE_REPOSITORY}" --tag=$IMAGE_REPOSITORY/khulnasoft_agent_ce:$KE_IMG_TAG -f Dockerfile .
     build_result=$?
     if [ $build_result -ne 0 ]
     then

@@ -52,7 +52,7 @@ const Command = () => {
   -e MGMT_CONSOLE_URL="${window.location.host ?? '---CONSOLE-IP---'}" \\
   -e MGMT_CONSOLE_PORT="443" \\
   -e KHULNASOFT_KEY="${dfApiKey}" \\
-  quay.io/khulnasoftio/khulnasoft_agent_ce:${version}`;
+  docker.io/khulnasoftio/khulnasoft_agent_ce:${version}`;
 
   return (
     <>

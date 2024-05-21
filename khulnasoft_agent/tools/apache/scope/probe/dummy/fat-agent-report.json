@@ -34476,12 +34476,12 @@
       "metadata": {
         "node_id": "sha256:b7008019e7fe3e29db0dcd99847a7a08e71a316ca8a09d1c83a7c3abfafae962",
         "node_type": "container_image",
-        "node_name": "quay.io/cilium/cilium:\u003cnone\u003e",
+        "node_name": "docker.io/cilium/cilium:\u003cnone\u003e",
         "timestamp": "2023-05-05T14:18:50.425113587Z",
         "pseudo": false,
         "host_name": "agent-sed-string",
-        "docker_image_name": "quay.io/cilium/cilium",
-        "docker_image_name_with_tag": "quay.io/cilium/cilium:\u003cnone\u003e",
+        "docker_image_name": "docker.io/cilium/cilium",
+        "docker_image_name_with_tag": "docker.io/cilium/cilium:\u003cnone\u003e",
         "docker_image_tag": "\u003cnone\u003e",
         "docker_image_size": "173 B",
         "docker_image_created_at": "1970-01-01T00:00:00Z"

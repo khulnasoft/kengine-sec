@@ -57,7 +57,7 @@ services:
 
   khulnasoft-postgres:
     container_name: khulnasoft-postgres
-    image: ${IMAGE_REPOSITORY:-quay.io/khulnasoft}/khulnasoft_postgres_ce:${DF_IMG_TAG:-2.2.1}
+    image: ${IMAGE_REPOSITORY:-docker.io/khulnasoft}/khulnasoft_postgres_ce:${KE_IMG_TAG:-2.2.1}
     ulimits:
       core: 0
     restart: unless-stopped
@@ -72,7 +72,7 @@ services:
 
   khulnasoft-redis:
     container_name: khulnasoft-redis
-    image: ${IMAGE_REPOSITORY:-quay.io/khulnasoft}/khulnasoft_redis_ce:${DF_IMG_TAG:-2.2.1}
+    image: ${IMAGE_REPOSITORY:-docker.io/khulnasoft}/khulnasoft_redis_ce:${KE_IMG_TAG:-2.2.1}
     ulimits:
       core: 0
     restart: unless-stopped
@@ -87,7 +87,7 @@ services:
 
   khulnasoft-neo4j:
     container_name: khulnasoft-neo4j
-    image: ${IMAGE_REPOSITORY:-quay.io/khulnasoft}/khulnasoft_neo4j_ce:${DF_IMG_TAG:-2.2.1}
+    image: ${IMAGE_REPOSITORY:-docker.io/khulnasoft}/khulnasoft_neo4j_ce:${KE_IMG_TAG:-2.2.1}
 
     ulimits:
       core: 0
@@ -118,7 +118,7 @@ services:
 
   khulnasoft-console-agent:
     container_name: khulnasoft-console-agent
-    image: ${IMAGE_REPOSITORY:-quay.io/khulnasoft}/khulnasoft_agent_ce:${DF_IMG_TAG:-2.2.1}
+    image: ${IMAGE_REPOSITORY:-docker.io/khulnasoft}/khulnasoft_agent_ce:${KE_IMG_TAG:-2.2.1}
     ulimits:
       core: 0
     deploy:
@@ -151,7 +151,7 @@ services:
 
   khulnasoft-router:
     container_name: khulnasoft-router
-    image: ${IMAGE_REPOSITORY:-quay.io/khulnasoft}/khulnasoft_router_ce:${DF_IMG_TAG:-2.2.1}
+    image: ${IMAGE_REPOSITORY:-docker.io/khulnasoft}/khulnasoft_router_ce:${KE_IMG_TAG:-2.2.1}
     ulimits:
       core: 0
     networks:
@@ -173,7 +173,7 @@ services:
   # this service can be commented in case S3 or external file server is used
   khulnasoft-file-server:
     container_name: khulnasoft-file-server
-    image: ${IMAGE_REPOSITORY:-quay.io/khulnasoft}/khulnasoft_file_server_ce:${DF_IMG_TAG:-2.2.1}
+    image: ${IMAGE_REPOSITORY:-docker.io/khulnasoft}/khulnasoft_file_server_ce:${KE_IMG_TAG:-2.2.1}
     ulimits:
       core: 0
     networks:
@@ -195,7 +195,7 @@ services:
 
   khulnasoft-server:
     container_name: khulnasoft-server
-    image: ${IMAGE_REPOSITORY:-quay.io/khulnasoft}/khulnasoft_server_ce:${DF_IMG_TAG:-2.2.1}
+    image: ${IMAGE_REPOSITORY:-docker.io/khulnasoft}/khulnasoft_server_ce:${KE_IMG_TAG:-2.2.1}
     ulimits:
       core: 0
     tmpfs:
@@ -225,7 +225,7 @@ services:
 
   khulnasoft-worker:
     container_name: khulnasoft-worker
-    image: ${IMAGE_REPOSITORY:-quay.io/khulnasoft}/khulnasoft_worker_ce:${DF_IMG_TAG:-2.2.1}
+    image: ${IMAGE_REPOSITORY:-docker.io/khulnasoft}/khulnasoft_worker_ce:${KE_IMG_TAG:-2.2.1}
     ulimits:
       core: 0
     restart: unless-stopped
@@ -247,7 +247,7 @@ services:
 
   # khulnasoft-worker-2:
   #   container_name: khulnasoft-worker-2
-  #   image: ${IMAGE_REPOSITORY:-quay.io/khulnasoft}/khulnasoft_worker_ce:${DF_IMG_TAG:-2.2.1}
+  #   image: ${IMAGE_REPOSITORY:-docker.io/khulnasoft}/khulnasoft_worker_ce:${KE_IMG_TAG:-2.2.1}
   #   ulimits:
   #     core: 0
   #   restart: unless-stopped
@@ -268,7 +268,7 @@ services:
 
   # khulnasoft-worker-3:
   #   container_name: khulnasoft-worker-3
-  #   image: ${IMAGE_REPOSITORY:-quay.io/khulnasoft}/khulnasoft_worker_ce:${DF_IMG_TAG:-2.2.1}
+  #   image: ${IMAGE_REPOSITORY:-docker.io/khulnasoft}/khulnasoft_worker_ce:${KE_IMG_TAG:-2.2.1}
   #   ulimits:
   #     core: 0
   #   restart: unless-stopped
@@ -289,7 +289,7 @@ services:
 
   khulnasoft-scheduler:
     container_name: khulnasoft-scheduler
-    image: ${IMAGE_REPOSITORY:-quay.io/khulnasoft}/khulnasoft_worker_ce:${DF_IMG_TAG:-2.2.1}
+    image: ${IMAGE_REPOSITORY:-docker.io/khulnasoft}/khulnasoft_worker_ce:${KE_IMG_TAG:-2.2.1}
     ulimits:
       core: 0
     restart: unless-stopped
@@ -311,7 +311,7 @@ services:
 
   khulnasoft-ui:
     container_name: khulnasoft-ui
-    image: ${IMAGE_REPOSITORY:-quay.io/khulnasoft}/khulnasoft_ui_ce:${DF_IMG_TAG:-2.2.1}
+    image: ${IMAGE_REPOSITORY:-docker.io/khulnasoft}/khulnasoft_ui_ce:${KE_IMG_TAG:-2.2.1}
     ulimits:
       core: 0
     networks:
@@ -325,7 +325,7 @@ services:
         max-size: "100m"
 
   khulnasoft-kafka-broker:
-    image: ${IMAGE_REPOSITORY:-quay.io/khulnasoft}/khulnasoft_kafka_broker_ce:${DF_IMG_TAG:-2.2.1}
+    image: ${IMAGE_REPOSITORY:-docker.io/khulnasoft}/khulnasoft_kafka_broker_ce:${KE_IMG_TAG:-2.2.1}
     hostname: khulnasoft-kafka-broker
     container_name: khulnasoft-kafka-broker
     # environment:
@@ -344,7 +344,7 @@ services:
     restart: unless-stopped
 
   khulnasoft-ingester:
-    image: ${IMAGE_REPOSITORY:-quay.io/khulnasoft}/khulnasoft_worker_ce:${DF_IMG_TAG:-2.2.1}
+    image: ${IMAGE_REPOSITORY:-docker.io/khulnasoft}/khulnasoft_worker_ce:${KE_IMG_TAG:-2.2.1}
     hostname: khulnasoft-ingester
     container_name: khulnasoft-ingester
     ports:
@@ -363,7 +363,7 @@ services:
     restart: unless-stopped
 
   khulnasoft-telemetry:
-    image: ${IMAGE_REPOSITORY:-quay.io/khulnasoft}/khulnasoft_telemetry_ce:${DF_IMG_TAG:-2.2.1}
+    image: ${IMAGE_REPOSITORY:-docker.io/khulnasoft}/khulnasoft_telemetry_ce:${KE_IMG_TAG:-2.2.1}
     hostname: khulnasoft-telemetry
     container_name: khulnasoft-telemetry
     ports:
@@ -383,7 +383,7 @@ services:
     restart: unless-stopped
 
   # khulnasoft-asynq-mon:
-  #   image: ${IMAGE_REPOSITORY:-quay.io/khulnasoft}/asynqmon:latest
+  #   image: ${IMAGE_REPOSITORY:-docker.io/khulnasoft}/asynqmon:latest
   #   hostname: khulnasoft-asynq-mon
   #   container_name: khulnasoft-asynq-mon
   #   environment:

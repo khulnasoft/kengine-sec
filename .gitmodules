@@ -19,3 +19,6 @@
 [submodule "khulnasoft_agent/plugins/yara-rules"]
 	path = khulnasoft_agent/plugins/yara-rules
 	url = https://github.com/khulnasoft-lab/yara-rules
+[submodule "khulnasoft_agent/plugins/cloud-scanner"]
+	path = khulnasoft_agent/plugins/cloud-scanner
+	url = https://github.com/khulnasoft-lab/cloud-scanner
