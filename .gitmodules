@@ -1,3 +1,21 @@
 [submodule "golang_sdk"]
 	path = golang_sdk
 	url = https://github.com/khulnasoft-lab/golang_sdk.git
+[submodule "khulnasoft_agent/plugins/agent-plugins-grpc"]
+	path = khulnasoft_agent/plugins/agent-plugins-grpc
+	url = https://github.com/khulnasoft-lab/agent-plugins-grpc
+[submodule "khulnasoft_agent/plugins/package-scanner"]
+	path = khulnasoft_agent/plugins/package-scanner
+	url = https://github.com/khulnasoft-lab/package-scanner
+[submodule "khulnasoft_agent/plugins/SecretScanner"]
+	path = khulnasoft_agent/plugins/SecretScanner
+	url = https://github.com/khulnasoft-lab/SecretScanner
+[submodule "khulnasoft_agent/plugins/compliance"]
+	path = khulnasoft_agent/plugins/compliance
+	url = https://github.com/khulnasoft-lab/compliance
+[submodule "khulnasoft_agent/plugins/YaraHunter"]
+	path = khulnasoft_agent/plugins/YaraHunter
+	url = https://github.com/khulnasoft-lab/YaraHunter
+[submodule "khulnasoft_agent/plugins/yara-rules"]
+	path = khulnasoft_agent/plugins/yara-rules
+	url = https://github.com/khulnasoft-lab/yara-rules
