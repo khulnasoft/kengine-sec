@@ -8,7 +8,7 @@ replace github.com/khulnasoft-lab/golang_sdk/utils => ../golang_sdk/utils
 
 replace github.com/khulnasoft/kengine/khulnasoft_utils => ../khulnasoft_utils/
 
-replace github.com/khulnasoft/df-utils => ../khulnasoft_agent/tools/apache/khulnasoft/df-utils
+replace github.com/khulnasoft/ke-utils => ../khulnasoft_agent/tools/apache/khulnasoft/ke-utils
 
 replace github.com/khulnasoft-lab/package-scanner => ../khulnasoft_agent/plugins/package-scanner
 
