@@ -10,7 +10,7 @@ replace github.com/khulnasoft/kengine/khulnasoft_utils => ../khulnasoft_utils/
 
 replace github.com/khulnasoft/df-utils => ../khulnasoft_agent/tools/apache/khulnasoft/df-utils
 
-replace github.com/khulnasoft/package-scanner => ../khulnasoft_agent/plugins/package-scanner
+replace github.com/khulnasoft-lab/package-scanner => ../khulnasoft_agent/plugins/package-scanner
 
 replace github.com/khulnasoft-lab/SecretScanner => ../khulnasoft_agent/plugins/SecretScanner
 
@@ -20,7 +20,7 @@ replace github.com/khulnasoft/kengine/khulnasoft_server => ../khulnasoft_server/
 
 replace github.com/khulnasoft-lab/agent-plugins-grpc => ../khulnasoft_agent/plugins/agent-plugins-grpc
 
-// Do not upgrade the version. This should be in sync with https://github.com/khulnasoft/syft.
+// Do not upgrade the version. This should be in sync with https://github.com/khulnasoft-lab/syft.
 require github.com/anchore/syft v1.3.0
 
 require (

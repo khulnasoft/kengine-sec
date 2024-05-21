@@ -22,7 +22,7 @@ import (
 )
 
 var (
-	threatIntelURL = "https://threat-intel.khulnasoft.io/threat-intel/listing.json"
+	threatIntelURL = "https://threat-intel.khulnasoft.com/threat-intel/listing.json"
 )
 
 // FetchLicense gets license key from database

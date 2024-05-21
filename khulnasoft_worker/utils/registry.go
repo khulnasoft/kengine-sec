@@ -26,7 +26,7 @@ import (
 	"github.com/khulnasoft/kengine/khulnasoft_utils/log"
 	postgresql_db "github.com/khulnasoft/kengine/khulnasoft_utils/postgresql/postgresql-db"
 	"github.com/khulnasoft/kengine/khulnasoft_utils/telemetry"
-	"github.com/khulnasoft/package-scanner/utils"
+	"github.com/khulnasoft-lab/package-scanner/utils"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/credentials"

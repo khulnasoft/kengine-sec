@@ -16,8 +16,8 @@ import (
 )
 
 var (
-	listing_url    = "https://threat-intel.khulnasoft.io/release/threatmapper/listing.json"
-	cs_listing_url = "https://threat-intel.khulnasoft.io/release/cloudscanner/listing.json"
+	listing_url    = "https://threat-intel.khulnasoft.com/release/threatmapper/listing.json"
+	cs_listing_url = "https://threat-intel.khulnasoft.com/release/cloudscanner/listing.json"
 )
 
 type ListingFormat struct {
