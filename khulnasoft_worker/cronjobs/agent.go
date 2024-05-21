@@ -16,7 +16,7 @@ import (
 )
 
 var (
-	listing_url    = "https://threat-intel.khulnasoft.com/release/threatmapper/listing.json"
+	listing_url    = "https://threat-intel.khulnasoft.com/release/kengine/listing.json"
 	cs_listing_url = "https://threat-intel.khulnasoft.com/release/cloudscanner/listing.json"
 )
 
