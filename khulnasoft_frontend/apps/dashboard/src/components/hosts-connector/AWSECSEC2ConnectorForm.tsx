@@ -20,8 +20,8 @@ export const AWSECSEC2ConnectorForm = () => {
           title="AWS ECS"
         >
           <div className="text-p7a text-text-text-and-icon">
-            In AWS ECS (EC2), the Kengine sensors are deployed as a daemon service
-            task definition.{' '}
+            In AWS ECS (EC2), the Kengine sensors are deployed as a daemon service task
+            definition.{' '}
             <DFLink
               href={`https://community.khulnasoft.com/kengine/docs/v2.2/sensors/aws-ecs`}
               target="_blank"

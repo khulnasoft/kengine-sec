@@ -32,9 +32,8 @@ export const TopRisksRuntimeDummy = () => {
         </div>
         <div className="text-h3 text-text-input-value">Runtime Protection</div>
         <div className="px-6 pt-1 text-center text-p4a text-text-text-and-icon">
-          Extend Kengine with runtime attack analysis, threat assessment, and
-          targeted protection for your applications. Scalable, supported, and ready for
-          action!
+          Extend Kengine with runtime attack analysis, threat assessment, and targeted
+          protection for your applications. Scalable, supported, and ready for action!
         </div>
         <DFLink
           unstyled

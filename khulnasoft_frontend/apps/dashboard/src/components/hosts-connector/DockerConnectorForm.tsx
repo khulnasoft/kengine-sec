@@ -117,8 +117,8 @@ export const DockerConnectorForm = () => {
           title="Connect Docker Container"
         >
           <div className="text-p7a text-text-text-and-icon">
-            Deploy Khulnasoft agent sensor as a docker container. Find out more information
-            by{' '}
+            Deploy Khulnasoft agent sensor as a docker container. Find out more
+            information by{' '}
             <DFLink
               href={`https://community.khulnasoft.com/kengine/docs/v2.2/sensors/docker`}
               target="_blank"

@@ -214,8 +214,7 @@ const FirstCommand = () => {
   return (
     <div className="relative flex items-center">
       <pre className="h-fit text-p7a text-text-text-and-icon">
-        helm repo add khulnasoft
-        https://khulnasoft-helm-charts.s3.amazonaws.com/kengine
+        helm repo add khulnasoft https://khulnasoft-helm-charts.s3.amazonaws.com/kengine
       </pre>
       <div className="flex items-center ml-auto self-start">
         {isCopied ? 'copied' : null}
