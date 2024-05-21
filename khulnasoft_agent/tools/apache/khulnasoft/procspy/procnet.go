@@ -2,7 +2,7 @@ package procspy
 
 import (
 	"bytes"
-	dfUtils "github.com/khulnasoft/df-utils"
+	dfUtils "github.com/khulnasoft/ke-utils"
 	"net"
 	"reflect"
 )

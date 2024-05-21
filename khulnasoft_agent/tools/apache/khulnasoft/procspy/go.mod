@@ -2,14 +2,14 @@ module github.com/khulnasoft/kengine/khulnasoft_agent/tools/apache/khulnasoft/pr
 
 go 1.21
 
-replace github.com/khulnasoft/df-utils => ../df-utils/
+replace github.com/khulnasoft/ke-utils => ../ke-utils/
 
-replace github.com/khulnasoft/df-utils/osrelease => ../df-utils/osrelease
+replace github.com/khulnasoft/ke-utils/osrelease => ../ke-utils/osrelease
 
 replace github.com/khulnasoft/kengine/khulnasoft_utils => ../../../../../khulnasoft_utils
 
 require (
-	github.com/khulnasoft/df-utils v0.0.0-00010101000000-000000000000
+	github.com/khulnasoft/ke-utils v0.0.0-00010101000000-000000000000
 	github.com/weaveworks/procspy v0.0.0-20150706124340-cb970aa190c3
 )
 
