@@ -31,6 +31,13 @@ require (
 	github.com/jellydator/ttlcache/v3 v3.2.0
 	github.com/johnfercher/maroto/v2 v2.0.0-beta.17
 	github.com/kelseyhightower/envconfig v1.4.0
+	github.com/khulnasoft-lab/SecretScanner v0.0.0-00010101000000-000000000000
+	github.com/khulnasoft-lab/YaraHunter v0.0.0-00010101000000-000000000000
+	github.com/khulnasoft-lab/agent-plugins-grpc v0.0.0-20240428155115-19b68d48bafa
+	github.com/khulnasoft-lab/golang_sdk/utils v0.0.0-20240520213426-d989e5f20024
+	github.com/khulnasoft-lab/package-scanner v0.0.0-00010101000000-000000000000
+	github.com/khulnasoft/kengine/khulnasoft_server v0.0.0-00010101000000-000000000000
+	github.com/khulnasoft/kengine/khulnasoft_utils v0.0.0-00010101000000-000000000000
 	github.com/minio/minio-go/v7 v7.0.70
 	github.com/neo4j/neo4j-go-driver/v5 v5.20.0
 	github.com/pkg/errors v0.9.1
@@ -90,7 +97,6 @@ require (
 	github.com/containerd/typeurl/v2 v2.1.1 // indirect
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
 	github.com/decred/dcrd/dcrec/secp256k1/v4 v4.3.0 // indirect
-	github.com/khulnasoft-lab/golang_sdk/client v0.0.0-20231201173641-092afefd00a2 // indirect
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
 	github.com/distribution/reference v0.6.0 // indirect
 	github.com/docker/cli v24.0.7+incompatible // indirect
@@ -151,6 +157,8 @@ require (
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/jung-kurt/gofpdf v1.16.2 // indirect
 	github.com/k-sone/critbitgo v1.4.0 // indirect
+	github.com/khulnasoft-lab/golang_sdk/client v0.0.0-20240520213426-d989e5f20024 // indirect
+	github.com/khulnasoft-lab/vessel v0.1.1 // indirect
 	github.com/klauspost/compress v1.17.8 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.7 // indirect
 	github.com/klauspost/pgzip v1.2.5 // indirect
@@ -248,8 +256,8 @@ require (
 	google.golang.org/appengine v1.6.8 // indirect
 	google.golang.org/genproto v0.0.0-20240429193739-8cf5692501f6 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20240429193739-8cf5692501f6 // indirect
-	google.golang.org/grpc v1.63.2 // indirect
-	google.golang.org/protobuf v1.34.0 // indirect
+	google.golang.org/grpc v1.64.0 // indirect
+	google.golang.org/protobuf v1.34.1 // indirect
 	gopkg.in/inf.v0 v0.9.1 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
