@@ -7,7 +7,7 @@ import (
 	"strings"
 	"time"
 
-	dfUtils "github.com/khulnasoft/df-utils"
+	dfUtils "github.com/khulnasoft/ke-utils"
 
 	humanize "github.com/dustin/go-humanize"
 	docker_client "github.com/fsouza/go-dockerclient"

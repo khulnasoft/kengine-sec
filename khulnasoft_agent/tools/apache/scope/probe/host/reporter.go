@@ -11,8 +11,8 @@ import (
 	"time"
 
 	"github.com/khulnasoft/kengine/khulnasoft_utils/log"
-	dfUtils "github.com/khulnasoft/df-utils"
-	"github.com/khulnasoft/df-utils/cloud_metadata"
+	dfUtils "github.com/khulnasoft/ke-utils"
+	"github.com/khulnasoft/ke-utils/cloud_metadata"
 	"github.com/weaveworks/scope/report"
 )
 

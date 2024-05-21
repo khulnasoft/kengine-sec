@@ -6,7 +6,7 @@ import (
 	"strings"
 	"time"
 
-	dfUtils "github.com/khulnasoft/df-utils"
+	dfUtils "github.com/khulnasoft/ke-utils"
 	"github.com/dustin/go-humanize"
 	"github.com/weaveworks/scope/probe/docker"
 	"github.com/weaveworks/scope/report"

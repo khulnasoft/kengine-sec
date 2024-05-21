@@ -29,7 +29,7 @@ CP = cp
 
 gocode:
 	echo "Building go binary for cloud metadata instance id..."
-	($(CD) tools/apache/khulnasoft/df-utils/get_cloud_instance_id && CGO_ENABLED=0 go build -o getCloudInstanceId $(GOFLAGS) .)
+	($(CD) tools/apache/khulnasoft/ke-utils/get_cloud_instance_id && CGO_ENABLED=0 go build -o getCloudInstanceId $(GOFLAGS) .)
 
 install:
 
@@ -48,7 +48,7 @@ discovery: tools/apache/scope/vendor
 		./prog)
 
 clean:
-	-$(RM) tools/apache/khulnasoft/df-utils/getCloudInstanceId
+	-$(RM) tools/apache/khulnasoft/ke-utils/getCloudInstanceId
 	-$(RM) tools/apache/scope/docker/discovery
 	-(cd plugins && make clean)
 	-$(RM) -rf tools/apache/scope/vendor

@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"github.com/khulnasoft/kengine/khulnasoft_utils/log"
-	"github.com/khulnasoft/df-utils/cloud_metadata"
+	"github.com/khulnasoft/ke-utils/cloud_metadata"
 	"github.com/weaveworks/scope/report"
 )
 

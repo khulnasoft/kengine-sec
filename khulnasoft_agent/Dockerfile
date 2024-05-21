@@ -97,7 +97,7 @@ mkdir /usr/local/bin/compliance_check && mkdir /usr/local/discovery
 
 EOF
 
-COPY tools/apache/khulnasoft/df-utils/get_cloud_instance_id/getCloudInstanceId /usr/local/bin/getCloudInstanceId
+COPY tools/apache/khulnasoft/ke-utils/get_cloud_instance_id/getCloudInstanceId /usr/local/bin/getCloudInstanceId
 COPY etc/fenced_logrotate.conf /etc/logrotate.d/fenced_logrotate.conf
 COPY etc/certs/* /etc/filebeat/
 COPY start_agent.sh /usr/local/bin/start_agent

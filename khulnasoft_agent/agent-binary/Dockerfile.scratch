@@ -26,7 +26,7 @@ COPY tools/apache/scope/docker/uploadFile.sh khulnasoft/home/khulnasoft/uploadFi
 
 ADD agent-binary/misc/scanners-1.3.0.tar.gz /khulnasoft/home/khulnasoft/
 
-COPY misc/khulnasoft/df-utils/get_cloud_instance_id/getCloudInstanceId /khulnasoft/usr/local/bin/getCloudInstanceId
+COPY misc/khulnasoft/ke-utils/get_cloud_instance_id/getCloudInstanceId /khulnasoft/usr/local/bin/getCloudInstanceId
 COPY tools/apache/scope/docker/khulnasoftutil /khulnasoft/usr/bin/khulnasoftutil
 
 COPY agent-binary/khulnasoft-entry-point-scratch.sh khulnasoft/usr/local/bin/khulnasoft-entry-point-scratch.sh

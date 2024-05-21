@@ -8,7 +8,7 @@ import (
 
 	"github.com/armon/go-radix"
 	"github.com/khulnasoft/kengine/khulnasoft_utils/log"
-	dfUtils "github.com/khulnasoft/df-utils"
+	dfUtils "github.com/khulnasoft/ke-utils"
 	docker_client "github.com/fsouza/go-dockerclient"
 
 	"github.com/weaveworks/scope/report"

@@ -15,7 +15,7 @@ import (
 	"github.com/weaveworks/scope/probe/common"
 
 	"github.com/khulnasoft/kengine/khulnasoft_utils/log"
-	dfUtils "github.com/khulnasoft/df-utils"
+	dfUtils "github.com/khulnasoft/ke-utils"
 	docker_client "github.com/fsouza/go-dockerclient"
 	"github.com/weaveworks/common/tracing"
 	"github.com/weaveworks/scope/common/hostname"

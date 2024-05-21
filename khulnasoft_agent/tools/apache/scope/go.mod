@@ -2,9 +2,9 @@ module github.com/weaveworks/scope
 
 go 1.21.9
 
-replace github.com/khulnasoft/df-utils => ../khulnasoft/df-utils
+replace github.com/khulnasoft/ke-utils => ../khulnasoft/ke-utils
 
-replace github.com/khulnasoft/df-utils/cloud_metadata => ../khulnasoft/df-utils/cloud_metadata
+replace github.com/khulnasoft/ke-utils/cloud_metadata => ../khulnasoft/ke-utils/cloud_metadata
 
 replace github.com/weaveworks/tcptracer-bpf => ../khulnasoft/tcptracer-bpf
 
@@ -25,8 +25,8 @@ require (
 	github.com/khulnasoft/kengine/khulnasoft_utils v0.0.0-00010101000000-000000000000
 	github.com/khulnasoft/agent-plugins-grpc v1.1.0
 	github.com/khulnasoft/conntrack v1.0.0
-	github.com/khulnasoft/df-utils v0.0.0-00010101000000-000000000000
-	github.com/khulnasoft/df-utils/cloud_metadata v0.0.0-00010101000000-000000000000
+	github.com/khulnasoft/ke-utils v0.0.0-00010101000000-000000000000
+	github.com/khulnasoft/ke-utils/cloud_metadata v0.0.0-00010101000000-000000000000
 	github.com/khulnasoft/golang_sdk/client v0.0.0-00010101000000-000000000000
 	github.com/khulnasoft/golang_sdk/utils v0.0.0-00010101000000-000000000000
 	github.com/dustin/go-humanize v1.0.1
